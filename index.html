@@ -8,40 +8,41 @@
 <head>
     <meta charset="UTF-8">
 	<title>Pokemon Game Backend</title>
-
+    <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
 <body>
     <p></p>
 	<div class="container">
         <div style="background: !important" class="jumbotron deal-page-header py-4">
-            <h1><i class="fas fa-home"></i> Pokemon Database User Interface </h1>
+            <h1>            <a class="navbar-brand ball" href="index.html">
+                <img class="ball" src="images/ball.png">
+            </a> Pokemon Database User Interface </h1>
         </div>
         
         <!-- Main content for page -->
         <div class="row justify-content-around"> 
 
-            <div class="card" style="width: 18rem;">
+            <div class="card m-2" style="width: 18rem;">
                 <img src="index/trainers.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">View/Add/Delete Trainer</h5>
-                    <p class="card-text">The trainer table...</p>
-                    <a href="trainers.html" class="btn btn-primary">Trainers Table</a>
+                    <p class="card-text">The Trainer Pokedex contains records details on trainers such as their name, gender, and age. Below users can view and delete from the Trainer Pokedex.</p>
+                    <a href="trainer_pokedex.html" class="btn btn-primary">Trainers Table</a>
                 </div>
             </div>
             
-            <div class="card" style="width: 18rem;">
-                <img src="index/trainers.jpg" class="card-img-top" alt="...">
+            <div class="card m-2" style="width: 18rem;">
+                <img src="index/battle.png" class="mx-auto card-img-top h-50 w-50" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Add/View/Update battle</h5>
+                    <h5 class="card-title">Add/View/Update Battle</h5>
                     <p class="card-text">The battle table...</p>
                     <a href="#" class="btn btn-primary">Battles Table</a>
                 </div>
             </div>
         
-            <div class="card" style="width: 18rem;">
-                <img src="index/trainers.jpg" class="card-img-top" alt="...">
+            <div class="card m-2" style="width: 18rem;">
+                <img src="index/pokemon.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Add Pokemon</h5>
                     <p class="card-text">The Pokemon table is searchable...</p>
@@ -49,39 +50,39 @@
                 </div>
             </div>
             
-            <div class="card" style="width: 18rem;">
-                <img src="index/trainers.jpg" class="card-img-top" alt="...">
+            <div class="card m-2" style="width: 18rem;">
+                <img src="index/pokemonTypes.png" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Add/View Pokemon type</h5>
+                    <h5 class="card-title">Add/View Pokemon Type</h5>
                     <p class="card-text">The Pokemon type table...</p>
                     <a href="#" class="btn btn-primary">Pokemon Types Table</a>
                 </div>
             </div>            
             
-            <div class="card" style="width: 18rem;">
-                <img src="index/trainers.jpg" class="card-img-top" alt="...">
+            <div class="card m-2" style="width: 18rem;">
+                <img src="index/attack.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Add/View/Delete Attack</h5>
                     <p class="card-text">The Pokemon attacks table...</p>
-                    <a href="#" class="btn btn-primary">Attacks Table</a>
+                    <a href="attacks.html" class="btn btn-primary">Attacks Table</a>
                 </div>
             </div>
             
-            <div class="card" style="width: 18rem;">
-                <img src="index/trainers.jpg" class="card-img-top" alt="...">
+            <div class="card m-2" style="width: 18rem;">
+                <img src="index/defense.png" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Add/View/Delete Defense</h5>
                     <p class="card-text">The Pokemon defense types table...</p>
-                    <a href="#" class="btn btn-primary">Defenses Table</a>
+                    <a href="defenses.html" class="btn btn-primary">Defenses Table</a>
                 </div>
             </div>            
             
-            <div class="card" style="width: 18rem;">
-                <img src="index/trainers.jpg" class="card-img-top" alt="...">
+            <div class="card m-2" style="width: 18rem;">
+                <img src="index/inventory.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">Add, Update & Delete Pokemon to Trainer inventory</h5>
-                    <p class="card-text">The trainer inventory of Pokemon...</p>
-                    <a href="#" class="btn btn-primary">Inventory Table</a>
+                    <h5 class="card-title">Add, Update & Delete Trainer Inventory</h5>
+                    <p class="card-text"></p>
+                    <a href="trainer_inventory.html" class="btn btn-primary">Inventory Table</a>
                 </div>
             </div>
         </div>	
