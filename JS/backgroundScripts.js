@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", initialize);
 
 // Function to initialize table and bind the submit button 
 function initialize() {
+    CreateTableFromJSON();
+    console.log("Test");
 }
 
 // Check server SQL database to see if data exists, if so populate table with data 
@@ -29,6 +31,63 @@ function updateTable() {
     req.send(JSON.stringify(payload));
     event.preventDefault();
 }
+
+function CreateTableFromJSON() {
+        var attacks = [
+            {
+                "attackID": "1",
+                "Attack Name": "Torrent",
+            },            
+            {
+                "attackID": "2",
+                "Attack Name": "Overgrow",
+            },
+            {
+                "attackID": "3",
+                "Attack Name": "Swarm",
+            }
+        ]
+
+        // EXTRACT VALUE FOR HTML HEADER. 
+        // ('Book ID', 'Book Name', 'Category' and 'Price')
+        var col = [];
+        for (var i = 0; i < attacks.length; i++) {
+            for (var key in attacks[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+        // CREATE DYNAMIC TABLE.
+        var table = document.createElement("table");
+
+        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+
+        for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+        }
+
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < attacks.length; i++) {
+
+            tr = table.insertRow(-1);
+
+            for (var j = 0; j < col.length; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = attacks[i][col[j]];
+            }
+        }
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+    }
         
         
 	// var req = new XMLHttpRequest();

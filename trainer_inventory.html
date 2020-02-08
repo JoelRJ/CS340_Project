@@ -66,14 +66,18 @@
     <!--Insert Trainer-->
 
     <div class="container my-5 text-left">
-        <h4 class="my-5"><b>Add an Attack to the table </b></h4>
+        <h4 class="my-5"><b>Add, Update & Delete Pokemon - Trainer Connections </b></h4>
     </div>
 
     <div class="container my-5 text-center">
         <form class="form-inline" action="#">
             <div class="form-group text-form">
-                <label for="attack">Attack Name: </label>
-                <input type="text" class="form-control" id="trainer_name">
+                <label for="name">Trainer Name:</label>
+                <input type="text" class="form-control" id="nameID">
+            </div>
+            <div class="form-group text-form">
+                <label for="type">Pokemon: </label>
+                <input type="text" class="form-control" id="typeID">
             </div>
             <input class="btn btn-primary" type="submit" value="Insert">
         </form>
@@ -86,25 +90,29 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Attack Name</th>
+                    <th scope="col">Trainer</th>
+                    <th scope="col">Pokemon</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <th scope="row">1</th>
-                    <td>Overgrow</td>
-                    <td><button class="btn btn-primary" type="submit">Delete</button></td>
+                    <td>Ash</td>
+                    <td>Pikachu</td>
+                    <td><button class="btn btn-primary m-1" type="submit">Update</button><button class="btn btn-primary m-1" type="submit">Delete</button></td>
                 </tr>
                 <tr>
                     <th scope="row">2</th>
-                    <td>Torrent</td>
-                    <td><button class="btn btn-primary" type="submit">Delete</button></td>
+                    <td>Luis</td>
+                    <td>Charzard</td>
+                    <td><button class="btn btn-primary m-1" type="submit">Update</button><button class="btn btn-primary m-1" type="submit">Delete</button></td>
                 </tr>
                 <tr>
                     <th scope="row">3</th>
-                    <td>Swarm</td>
-                    <td><button class="btn btn-primary" type="submit">Delete</button></td>
+                    <td>Joel</td>
+                    <td>Magikarp</td>
+                    <td><button class="btn btn-primary m-1" type="submit">Update</button><button class="btn btn-primary m-1" type="submit">Delete</button></td>
                 </tr>
             </tbody>
         </table>
