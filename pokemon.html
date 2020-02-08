@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Battle</title>
+
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+    <!--Navbar-->
+
+    <div class="container">
+
+        <ul class="nav nav-tabs">
+            <a class="navbar-brand ball" href="index.html">
+                <img class="ball" src="images/ball.png">
+            </a>
+            <li class="nav-item">
+                <a class="nav-link" href="trainer_pokedex.html">Trainers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="battle.html">Battles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="pokemon.html">Pokemon</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pokemon_type.html">Pokemon Type</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="attacks.html">Attacks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="defenses.html">Defenses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="trainer_inventory.html">Trainer Inventory</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <!--Title and Intro-->
+
+    <div class="container my-5 text-center">
+        <hr class="featurette-divider">
+        <h1 class="my-5 pageTitle">Pokemon Table</h1>
+
+        <h3 class="my-5">The Pokemon Table list details of each pokemon such as their name, type, (up to two),
+            attack move, defense move, weight and height.
+        </h3>
+        <br>
+    </div>
+
+
+    <!--Insert Trainer-->
+
+    <div class="container my-5 text-left">
+        <h4 class="my-5"><b>Add a battle by entering a winner and loser:</b></h4>
+    </div>
+
+    <div class="container my-5 text-center">
+        <form class="form-inline" action="#">
+            <div class="form-group text-form">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="nameID">
+            </div>
+            <div class="form-group text-form">
+                <label for="type">Type:</label>
+                <input type="text" class="form-control" id="typeID">
+            </div>
+            <div class="form-group text-form">
+                <label for="type_2">Type 2:</label>
+                <input type="text" class="form-control" id="type_2ID">
+            </div>
+            <div class="form-group text-form">
+                <label for="attack">Attack:</label>
+                <input type="text" class="form-control" id="attackID">
+            </div>
+            <div class="form-group text-form">
+                <label for="defense">Defense:</label>
+                <input type="text" class="form-control" id="defenseID">
+            </div>
+            <div class="form-group text-form">
+                <label for="height">Height (m):</label>
+                <input type="text" class="form-control" id="heightID">
+            </div>
+            <div class="form-group text-form">
+                <label for="weight">Weight (kg):</label>
+                <input type="text" class="form-control" id="weightID">
+            </div>
+            <div class="form-group text-form">
+                <input class="btn btn-primary" type="submit" value="Insert">
+            </div>
+        </form>
+    </div>
+    <br>
+
+
+
+
+    <!-- Table -->
+
+    <div class="container my-5 text-left">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h4><b>Pokemon Table of each type:</b></h4>
+                </div>
+                <div class="col-2">
+                </div>
+                <div class="col">
+                    <form class="form-inline" action="#">
+                        <div class="text-form">
+                            <input type="text" class="form-control" id="trainer_name"
+                                placeholder="Enter Pokemon's name">
+                        </div>
+                        <div>
+                            <input class="btn btn-primary" type="submit" value="Search">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="container my-5 text-center">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">PokemonID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Type 2</th>
+                    <th scope="col">Attack</th>
+                    <th scope="col">Defense</th>
+                    <th scope="col">Height (m)</th>
+                    <th scope="col">Weight (kg)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Pikachu</td>
+                    <td>Electric</td>
+                    <td>NULL</td>
+                    <td>Spark</td>
+                    <td>Barrier</td>
+                    <td>0.4</td>
+                    <td>6.0</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Bulbasaur</td>
+                    <td>Grass</td>
+                    <td>Poison</td>
+                    <td>Razor Leaf</td>
+                    <td>Protect</td>
+                    <td>0.7</td>
+                    <td>6.9</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td>Jigglypuff</td>
+                    <td>Normal</td>
+                    <td>Fairy</td>
+                    <td>Sing</td>
+                    <td>Defense Curl</td>
+                    <td>0.5</td>
+                    <td>5.5</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- FOOTER -->
+    <div class="container my-5">
+        <hr class="featurette-divider">
+
+        <!-- FOOTER -->
+        <footer class="my-4 text-muted text-center text-small">
+            <p class="mb-1">&copy; 2020 Pokemon Database</p>
+
+        </footer>
+    </div>
+
+</body>
+
+</html>
