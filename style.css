@@ -4,9 +4,7 @@
 }
 
 .text-form {
-
-margin: 20px;
-
+  margin: 20px;
 }
 
 .button {
@@ -50,4 +48,11 @@ font-weight: bold;
    color: inherit; 
    text-decoration:none; 
    cursor:pointer;  
+}
+
+.not-active {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
 }
