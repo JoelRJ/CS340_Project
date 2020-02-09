@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", initialize);
 // Function to initialize table and bind the submit button 
 function initialize() {
     CreateTableFromJSON();
-    console.log("Test");
 }
 
 // Check server SQL database to see if data exists, if so populate table with data 
@@ -33,61 +32,30 @@ function updateTable() {
 }
 
 function CreateTableFromJSON() {
-        var attacks = [
-            {
-                "attackID": "1",
-                "Attack Name": "Torrent",
-            },            
-            {
-                "attackID": "2",
-                "Attack Name": "Overgrow",
-            },
-            {
-                "attackID": "3",
-                "Attack Name": "Swarm",
-            }
-        ]
+    // Dummy table 
+    var attacks = [
+        [1, "Torrent"],
+        [2, "Overgrow"],
+        [3, "Swarm"]
+    ]
 
-        // EXTRACT VALUE FOR HTML HEADER. 
-        // ('Book ID', 'Book Name', 'Category' and 'Price')
-        var col = [];
-        for (var i = 0; i < attacks.length; i++) {
-            for (var key in attacks[i]) {
-                if (col.indexOf(key) === -1) {
-                    col.push(key);
-                }
-            }
+    // Get ID for table on page
+    var table = document.getElementById("attackTable");
+    
+    // Add JSON object (array of arrays) to table body
+    for (var i = 0; i < attacks.length; i++) {
+
+        tr = table.insertRow(-1);
+
+        for (var j = 0; j < attacks[0].length; j++) {
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = attacks[i][j];
         }
-
-        // CREATE DYNAMIC TABLE.
-        var table = document.createElement("table");
-
-        // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
-
-        var tr = table.insertRow(-1);                   // TABLE ROW.
-
-        for (var i = 0; i < col.length; i++) {
-            var th = document.createElement("th");      // TABLE HEADER.
-            th.innerHTML = col[i];
-            tr.appendChild(th);
-        }
-
-        // ADD JSON DATA TO THE TABLE AS ROWS.
-        for (var i = 0; i < attacks.length; i++) {
-
-            tr = table.insertRow(-1);
-
-            for (var j = 0; j < col.length; j++) {
-                var tabCell = tr.insertCell(-1);
-                tabCell.innerHTML = attacks[i][col[j]];
-            }
-        }
-
-        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
-        var divContainer = document.getElementById("showData");
-        divContainer.innerHTML = "";
-        divContainer.appendChild(table);
+        
+        var tabCell = tr.insertCell(-1);
+        tabCell.innerHTML = '<button class="btn btn-primary" type="submit">Delete</button>';
     }
+}
         
         
 	// var req = new XMLHttpRequest();
