@@ -10,7 +10,7 @@ VALUES
   ('Felecia Ridge', 'female', 25),
   ('Jerrie Stockow', 'male', 23),
   ('Toni Darnell', 'female', 16),
-  ('Colt Steele,', 'male', 26),
+  ('Colt Steele', 'male', 26),
   ('Ludwig Wittgenstein', 'male', 18),
   ('Ethelyn Congrave', 'female', 14),
   ('John Howard', 'male', 20),
