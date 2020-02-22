@@ -1,0 +1,21 @@
+INSERT INTO  pokemonTypes
+  (description) 
+VALUES 
+  ('Bug'),
+  ('Dark'), 
+  ('Dragon'),
+  ('Electric'),
+  ('Fighting'),
+  ('Fire'),
+  ('Flying'),
+  ('Ghost'),
+  ('Grass'),
+  ('Ground'),
+  ('Ice'),
+  ('Normal'),
+  ('Poison'),
+  ('Psychic'),
+  ('Rock'),
+  ('Row'),
+  ('Steel'),
+  ('Water');
