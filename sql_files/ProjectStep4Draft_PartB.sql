@@ -4,6 +4,11 @@
 
 
 -- Trainer Pokemon Index Table
+SELECT trainers.name, pokemon.name FROM trainers_pokemon
+    JOIN trainers ON trainers.trainerID = trainers_pokemon.trainer,
+    JOIN pokemon ON pokemon.pokemonID = trainers_pokemon.pokemonID;
+
+
 INSERT INTO trainers_pokemon (trainer, pokemon)
     VALUES (:trainerInput, :pokemonInput);
 
@@ -12,6 +17,8 @@ UPDATE trainers_pokemon
     WHERE id = :rowID;
     
 DELETE FROM trainers_pokemon WHERE id = :rowID;
+
+SELECT trainer
 
 -- Attacks Table
 INSERT INTO attacks (description)

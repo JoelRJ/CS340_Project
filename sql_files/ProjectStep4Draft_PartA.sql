@@ -72,6 +72,8 @@ INSERT INTO defenses (description)
     VALUES ("Curl"), ("Rough Skin"), ("Anticipate");
     
 INSERT INTO trainers_pokemon (trainer, pokemon)
-    VALUES (1, 1), (2, 1);
-
-
+    VALUES ((SELECT trainerID FROM trainers WHERE name = "Ash Ketchum"), (SELECT pokemonID FROM pokemon WHERE name = "Bulbasaur")),
+    ((SELECT trainerID FROM trainers WHERE name = "Ash Ketchum"), (SELECT pokemonID FROM pokemon WHERE name = "Pikachu")),
+    ((SELECT trainerID FROM trainers WHERE name = "Ash Ketchum"), (SELECT pokemonID FROM pokemon WHERE name = "Charizard")),
+    ((SELECT trainerID FROM trainers WHERE name = "Harry Potter"), (SELECT pokemonID FROM pokemon WHERE name = "Bulbasaur")),
+    ((SELECT trainerID FROM trainers WHERE name = "Felecia Ridge"), (SELECT pokemonID FROM pokemon WHERE name = "Pikachu"));
