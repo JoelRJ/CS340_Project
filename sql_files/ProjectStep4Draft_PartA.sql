@@ -27,7 +27,7 @@ CREATE TABLE pokemon (
     type1 int(11) NOT NULL,
     type2 int(11),
     attack int(11) NOT NULL,
-    defense int(11) NOT NULL,
+    defense int(11),
     weight int(11) NOT NULL,
     height int(11) NOT NULL,
     PRIMARY KEY (pokemonID),
