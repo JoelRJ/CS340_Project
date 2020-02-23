@@ -112,7 +112,7 @@ VALUES
 
 -- Update Winner and Loser (UPDATE)
 
-UPDATE 
+UPDATE battles
     SET winner = (SELECT trainerID FROM trainers WHERE name = :winnerInput),
         loser = (SELECT trainerID FROM trainers WHERE name = :loserInput)
     WHERE battleID = :rowID;
