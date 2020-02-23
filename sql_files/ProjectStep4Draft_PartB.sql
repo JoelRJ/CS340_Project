@@ -7,8 +7,8 @@
 
 -- Fill table SELECT
 SELECT id, trainers.name AS "Trainer", pokemon.name AS "Pokemon" FROM trainers_pokemon
-	JOIN pokemon ON pokemon.pokemonID = trainers_pokemon.pokemonID
-    JOIN trainers ON trainers.trainerID = trainers_pokemon.trainerID
+	JOIN pokemon ON pokemon.pokemonID = trainers_pokemon.pokemon
+    JOIN trainers ON trainers.trainerID = trainers_pokemon.trainer
 
 -- Trainer drop-down menu
 SELECT name FROM trainers;
@@ -18,11 +18,11 @@ SELECT name FROM pokemon;
 
 -- Insert button
 INSERT INTO trainers_pokemon (trainer, pokemon)
-    VALUES ((SELECT trainerID FROM trainers WHERE name = :trainerInput), (SELECT pokemonID FROM pokemon WHERE name = :pokemonInput);
+    VALUES ((SELECT trainerID FROM trainers WHERE name = :trainerInput), (SELECT pokemonID FROM pokemon WHERE name = :pokemonInput));
     
 -- Update button
 UPDATE trainers_pokemon 
-    SET trainer = :trainerInput, Pokemon = :pokemonInput
+    SET trainer = :trainerInput, pokemon = :pokemonInput
     WHERE id = :rowID;
 
 -- Delete button
@@ -52,7 +52,7 @@ SELECT pokemon.name, pt1.description AS type1, pt2.description AS type2, attacks
 defenses.description AS defense, pokemon.height, pokemon.weight  
 FROM pokemon
     JOIN pokemonTypes pt1 ON pt1.typeID = pokemon.type1
-    JOIN pokemonTypes pt2 ON pt2.typeID = pokemon.type2
+    LEFT JOIN pokemonTypes pt2 ON pt2.typeID = pokemon.type2 
     JOIN attacks ON pokemon.attack = attacks.attackID
     JOIN defenses ON pokemon.defense = defenses.defenseID;
 
@@ -69,7 +69,7 @@ VALUES
     :heightInput);
 
 -- Search Pokemon (Drop Down - SELECT)
-SELECT FROM pokemon WHERE id = :rowID;
+SELECT * FROM pokemon WHERE pokemonID = :rowID;
 
 -- Make 'attack' Attribute NULL (UPDATE)
 UPDATE pokemon
