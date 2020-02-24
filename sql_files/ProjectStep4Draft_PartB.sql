@@ -56,7 +56,7 @@ FROM pokemon
     JOIN attacks ON pokemon.attack = attacks.attackID
     JOIN defenses ON pokemon.defense = defenses.defenseID;
 
--- Add Trainer (INSERT)
+-- Add Pokemon (INSERT)
 INSERT INTO pokemon
   (name, type1, type2, attack, defense, weight, height) 
 VALUES 
@@ -68,8 +68,9 @@ VALUES
     :weightInput,
     :heightInput);
 
--- Search Pokemon (Drop Down - SELECT)
+-- Search Pokemon (SELECT)
 SELECT * FROM pokemon WHERE pokemonID = :rowID;
+
 
 -- Make 'attack' Attribute NULL (UPDATE)
 UPDATE pokemon
@@ -94,7 +95,7 @@ DELETE FROM trainers WHERE trainerID = :rowID;
 
 -----------------------------------------
 
--- BATTLE TABLE
+-- BATTLES TABLE
 
 -- View Battle Table (SELECT)
 SELECT battles.battleID, t1.name AS winner, t2.name AS loser
