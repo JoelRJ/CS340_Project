@@ -16,33 +16,10 @@ function CreateTableFromJSON() {
     // https://www.w3schools.com/js/js_json_http.asp
     var req = new XMLHttpRequest();
     
-    switch(document.title) {
-        case "Attacks Table":
-            payload = "attacks";
-            break;
-        case "Trainer Pokedex":
-            payload = "trainers";
-            break;
-        case "Battle Table":
-            payload = "battles";
-            break;
-        case "Pokemon Table":
-            payload = "pokemon";
-            break;
-        case "Pokemon Type":
-            payload = "pokemonTypes";
-            break;
-        case "Defenses Table":
-            payload = "defenses";
-            break;
-        case "Trainer Pokemon Inventory":
-            payload = "trainers_pokemon";
-            break;
-    }
-    
+    var payload = getPayload();
     console.log(payload);
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
+    req.open("POST", 'http://flip2.engr.oregonstate.edu:16066/view_database', true);
     
     req.addEventListener('load',function(){
         if(req.status >= 200 && req.status < 400){
@@ -54,6 +31,7 @@ function CreateTableFromJSON() {
     req.send(JSON.stringify(payload));
     event.preventDefault();
 }
+
 
 // Update table with contents of response from server 
 function updateTable(data) {
@@ -73,6 +51,63 @@ function updateTable(data) {
         var tabCell = tr.insertCell(-1);
         tabCell.innerHTML = '<button class="btn btn-primary" onclick=removeElement(' + (i + 1) + ')>Delete</button>';
     }
+}
+
+// Insert into one-column table
+function insertOne() {
+    
+    // https://www.w3schools.com/js/js_json_http.asp
+    var req = new XMLHttpRequest();
+    
+    var payload = {table: null, value: null};
+    payload.table = getPayload();
+    payload.value = document.getElementById("insert_value").value;
+
+    req.open("POST", 'http://flip2.engr.oregonstate.edu:16066/insert_one', true);
+    
+    req.addEventListener('load',function(){
+        if(req.status >= 200 && req.status < 400){
+            var response = JSON.parse(req.responseText);
+            console.log(response);
+
+            updateTable(response);
+            
+        } else {
+            console.log("Error in network request: " + req.statusText);
+    }});
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+}
+
+function getPayload() {
+    
+    var table;
+    
+    switch(document.title) {
+        case "Attacks Table":
+            table = "attacks";
+            break;
+        case "Trainer Pokedex":
+            table = "trainers";
+            break;
+        case "Battle Table":
+            table = "battles";
+            break;
+        case "Pokemon Table":
+            table = "pokemon";
+            break;
+        case "Pokemon Type":
+            table = "pokemonTypes";
+            break;
+        case "Defenses Table":
+            table = "defenses";
+            break;
+        case "Trainer Pokemon Inventory":
+            table = "trainers_pokemon";
+            break;
+    }
+    
+    return table;
 }
 
 function removeElement(id) {
