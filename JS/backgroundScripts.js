@@ -12,22 +12,24 @@ function initialize() {
 
 // Check server SQL database to see if data exists, if so populate table with data 
 function CreateTableFromJSON() {
-    
+
     // https://www.w3schools.com/js/js_json_http.asp
     var req = new XMLHttpRequest();
-    
+
     var payload = getPayload();
     console.log(payload);
 
     req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
-    
-    req.addEventListener('load',function(){
-        if(req.status >= 200 && req.status < 400){
+
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
             updateTable(response);
         } else {
             console.log("Error in network request: " + req.statusText);
-    }});
+        }
+    });
     req.send(JSON.stringify(payload));
     event.preventDefault();
 }
@@ -37,7 +39,7 @@ function CreateTableFromJSON() {
 function updateTable(data) {
     // Get ID for table on page
     var table = document.getElementById("table");
-    
+
     // Add JSON object (array of arrays) to table body
     for (var i = 0; i < data.length; i++) {
 
@@ -47,99 +49,106 @@ function updateTable(data) {
             var tabCell = tr.insertCell(-1);
             tabCell.innerHTML = data[i][j];
         }
-        
+
         var tabCell = tr.insertCell(-1);
         tabCell.innerHTML = '<button class="btn btn-primary" onclick=removeElement(' + (i + 1) + ')>Delete</button>';
     }
 }
 
+
+
 // Insert into one-column table
 function insertOne() {
-    
+
     // https://www.w3schools.com/js/js_json_http.asp
     var req = new XMLHttpRequest();
-    
-    var payload = {table: null, value: null};
+
+    var payload = { table: null, value: null };
     payload.table = getPayload();
     payload.value = document.getElementById("insert_value").value;
 
     req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_one', true);
-    
-    req.addEventListener('load',function(){
-        if(req.status >= 200 && req.status < 400){
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
             updateTable(response);
-            
+
         } else {
             console.log("Error in network request: " + req.statusText);
-    }});
+        }
+    });
     req.send(JSON.stringify(payload));
     event.preventDefault();
 }
 
 // Insert into battles table
 function insertBattle() {
-    
+
     // https://www.w3schools.com/js/js_json_http.asp
     var req = new XMLHttpRequest();
     console.log("test");
-    var payload = {table: null, winner: null, loser: null};
+    var payload = { table: null, winner: null, loser: null };
     payload.table = getPayload();
     payload.winner = document.getElementById("firstInput").value;
     payload.loser = document.getElementById("secondInput").value;
     console.log(payload);
-    
+
     req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_battle', true);
-    
-    req.addEventListener('load',function(){
-        if(req.status >= 200 && req.status < 400){
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
             updateTable(response);
-            
+
         } else {
             console.log("Error in network request: " + req.statusText);
-    }});
+        }
+    });
     req.send(JSON.stringify(payload));
     event.preventDefault();
 }
 
 // Insert into trainer_pokemon table
 function insertPokemonTrainer() {
-    
+
     // https://www.w3schools.com/js/js_json_http.asp
     var req = new XMLHttpRequest();
 
-    var payload = {table: null, pokemon: null, trainer: null};
+    var payload = { table: null, pokemon: null, trainer: null };
     payload.table = getPayload();
     payload.trainer = document.getElementById("firstInput").value;
     payload.pokemon = document.getElementById("secondInput").value;
     console.log(payload);
-    
+
     req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer_pokemon', true);
-    
-    req.addEventListener('load',function(){
-        if(req.status >= 200 && req.status < 400){
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
             updateTable(response);
-            
+
         } else {
             console.log("Error in network request: " + req.statusText);
-    }});
+        }
+    });
     req.send(JSON.stringify(payload));
     event.preventDefault();
 }
 
+
+
 function getPayload() {
-    
+
     var table;
-    
-    switch(document.title) {
+
+    switch (document.title) {
         case "Attacks Table":
             table = "attacks";
             break;
@@ -148,6 +157,8 @@ function getPayload() {
             break;
         case "Battle Table":
             table = "battles";
+            drop_call("trainers", "firstInput");
+            drop_call("trainers", "secondInput");
             break;
         case "Pokemon Table":
             table = "pokemon";
@@ -160,12 +171,55 @@ function getPayload() {
             break;
         case "Trainer Pokemon Inventory":
             table = "trainers_pokemon";
+            drop_call("trainers", "firstInput");
+            drop_call("pokemon", "secondInput");
             break;
     }
-    
+
     return table;
 }
 
 function removeElement(id) {
     document.getElementById("attackTable").deleteRow(id);
+}
+
+
+function drop_call(database, selectID) {
+    var req = new XMLHttpRequest();
+
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
+
+    var payload = database
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
+            var response = JSON.parse(req.responseText);
+            drop_list(response, selectID);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+
+}
+
+
+function drop_list(data, selectID) {
+
+    var select = document.getElementById(selectID);
+
+    for (var i = 0; i < data.length; i++) {
+        console.log(data[i]);
+
+        var keys = Object.keys(data[i]);
+        var values = Object.values(data[i])
+
+
+        console.log(values[1]);
+        var el = document.createElement("option");
+        el.textContent = values[1];
+        el.value = values[0];
+        select.appendChild(el);
+    }
 }
