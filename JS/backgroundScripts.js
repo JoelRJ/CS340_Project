@@ -19,7 +19,7 @@ function CreateTableFromJSON() {
     var payload = getPayload();
     console.log(payload);
 
-    req.open("POST", 'http://flip2.engr.oregonstate.edu:16066/view_database', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
     
     req.addEventListener('load',function(){
         if(req.status >= 200 && req.status < 400){
@@ -63,7 +63,63 @@ function insertOne() {
     payload.table = getPayload();
     payload.value = document.getElementById("insert_value").value;
 
-    req.open("POST", 'http://flip2.engr.oregonstate.edu:16066/insert_one', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_one', true);
+    
+    req.addEventListener('load',function(){
+        if(req.status >= 200 && req.status < 400){
+            var response = JSON.parse(req.responseText);
+            console.log(response);
+
+            updateTable(response);
+            
+        } else {
+            console.log("Error in network request: " + req.statusText);
+    }});
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+}
+
+// Insert into battles table
+function insertBattle() {
+    
+    // https://www.w3schools.com/js/js_json_http.asp
+    var req = new XMLHttpRequest();
+    console.log("test");
+    var payload = {table: null, winner: null, loser: null};
+    payload.table = getPayload();
+    payload.winner = document.getElementById("firstInput").value;
+    payload.loser = document.getElementById("secondInput").value;
+    console.log(payload);
+    
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_battle', true);
+    
+    req.addEventListener('load',function(){
+        if(req.status >= 200 && req.status < 400){
+            var response = JSON.parse(req.responseText);
+            console.log(response);
+
+            updateTable(response);
+            
+        } else {
+            console.log("Error in network request: " + req.statusText);
+    }});
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+}
+
+// Insert into trainer_pokemon table
+function insertPokemonTrainer() {
+    
+    // https://www.w3schools.com/js/js_json_http.asp
+    var req = new XMLHttpRequest();
+
+    var payload = {table: null, pokemon: null, trainer: null};
+    payload.table = getPayload();
+    payload.trainer = document.getElementById("firstInput").value;
+    payload.pokemon = document.getElementById("secondInput").value;
+    console.log(payload);
+    
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer_pokemon', true);
     
     req.addEventListener('load',function(){
         if(req.status >= 200 && req.status < 400){
