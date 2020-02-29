@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", initialize);
 // Function to initialize table and bind the submit button 
 function initialize() {
     CreateTableFromJSON();
+    CreateDropDownList();
 }
 
 // Check server SQL database to see if data exists, if so populate table with data 
@@ -33,6 +34,7 @@ function CreateTableFromJSON() {
     req.send(JSON.stringify(payload));
     event.preventDefault();
 }
+
 
 
 // Update table with contents of response from server 
@@ -144,6 +146,7 @@ function insertPokemonTrainer() {
 
 
 
+
 function getPayload() {
 
     var table;
@@ -157,8 +160,6 @@ function getPayload() {
             break;
         case "Battle Table":
             table = "battles";
-            drop_call("trainers", "firstInput");
-            drop_call("trainers", "secondInput");
             break;
         case "Pokemon Table":
             table = "pokemon";
@@ -171,8 +172,6 @@ function getPayload() {
             break;
         case "Trainer Pokemon Inventory":
             table = "trainers_pokemon";
-            drop_call("trainers", "firstInput");
-            drop_call("pokemon", "secondInput");
             break;
     }
 
@@ -183,7 +182,31 @@ function removeElement(id) {
     document.getElementById("attackTable").deleteRow(id);
 }
 
+// creates dropdown from SQL server depending on current page browsed
+function CreateDropDownList() {
 
+    switch (document.title) {
+        case "Battle Table":
+            table = "battles";
+            drop_call("trainers", "firstInput");
+            drop_call("trainers", "secondInput");
+            break;
+        case "Pokemon Table":
+            table = "pokemon";
+            drop_call("pokemonTypes", "typeID");
+            drop_call("pokemonTypes", "type2ID");
+            drop_call("attacks", "attackID");
+            drop_call("defenses", "defenseID");
+            break;
+        case "Trainer Pokemon Inventory":
+            drop_call("trainers", "firstInput");
+            drop_call("pokemon", "secondInput");
+            break;
+    }
+}
+
+
+// calls database to obtain data to populate dropdown list
 function drop_call(database, selectID) {
     var req = new XMLHttpRequest();
 
@@ -205,6 +228,7 @@ function drop_call(database, selectID) {
 }
 
 
+// dynamically creates dropdown list
 function drop_list(data, selectID) {
 
     var select = document.getElementById(selectID);
