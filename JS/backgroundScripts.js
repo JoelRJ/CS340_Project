@@ -23,6 +23,7 @@ function CreateTableFromJSON() {
     req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
 
 
+
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
@@ -37,7 +38,7 @@ function CreateTableFromJSON() {
 
 
 
-// Update table with contents of response from server 
+// Update table with contents of response from server
 function updateTable(data) {
     // Get ID for table on page
     var table = document.getElementById("table");
@@ -146,7 +147,6 @@ function insertPokemonTrainer() {
 
 
 
-
 function getPayload() {
 
     var table;
@@ -197,6 +197,7 @@ function CreateDropDownList() {
             drop_call("pokemonTypes", "type2ID");
             drop_call("attacks", "attackID");
             drop_call("defenses", "defenseID");
+            drop_call("pokemon", "selectID");
             break;
         case "Trainer Pokemon Inventory":
             drop_call("trainers", "firstInput");
@@ -245,5 +246,27 @@ function drop_list(data, selectID) {
         el.textContent = values[1];
         el.value = values[0];
         select.appendChild(el);
+    }
+}
+
+// filters Pokemon table
+function myFunction() {
+    var input, filter, table, tr, td, i;
+    input = document.getElementById("selectID");
+    filter = input.value;
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        console.log(filter);
+        console.log(td);
+        if (td) {
+            if (td.innerHTML.indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
     }
 }

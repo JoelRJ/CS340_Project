@@ -66,7 +66,7 @@
     <!--Insert Trainer-->
 
     <div class="container my-5 text-left">
-        <h4 class="my-5"><b>Add a battle by entering a winner and loser:</b></h4>
+        <h4 class="my-5"><b>Add a pokemon:</b></h4>
     </div>
 
     <div class="container my-5 text-center">
@@ -126,8 +126,11 @@
                 <div class="col">
                     <form class="form-inline" action="#">
                         <div class="text-form">
-                            <input type="text" class="form-control" id="trainer_name"
-                                placeholder="Enter Pokemon's name">
+                            <select class="form-control" onchange="myFunction()" id="selectID">
+                            </select>
+                            <!--
+                                <input type="text" class="form-control" id="trainer_name"
+                                placeholder="Enter Pokemon's name"> -->
                         </div>
                         <div>
                             <input class="btn btn-primary" type="submit" value="Search">
@@ -156,38 +159,41 @@
                     <th scope="col"></th>
                 </tr>
             </thead>
-            <!-- <tbody> -->
-            <!-- <tr> -->
-            <!-- <th scope="row">1</th> -->
-            <!-- <td>Pikachu</td> -->
-            <!-- <td>Electric</td> -->
-            <!-- <td>NULL</td> -->
-            <!-- <td>Spark</td> -->
-            <!-- <td>Barrier<a href="###">&nbsp;(Remove)</a></td> -->
-            <!-- <td>0.4</td> -->
-            <!-- <td>6.0</td> -->
-            <!-- </tr> -->
-            <!-- <tr> -->
-            <!-- <th scope="row">2</th> -->
-            <!-- <td>Bulbasaur</td> -->
-            <!-- <td>Grass</td> -->
-            <!-- <td>Poison</td> -->
-            <!-- <td>Razor Leaf</td> -->
-            <!-- <td>Protect <a href="###">&nbsp;(Remove)</a></td> -->
-            <!-- <td>0.7</td> -->
-            <!-- <td>6.9</td> -->
-            <!-- </tr> -->
-            <!-- <tr> -->
-            <!-- <th scope="row">3</th> -->
-            <!-- <td>Jigglypuff</td> -->
-            <!-- <td>Normal</td> -->
-            <!-- <td>Fairy</td> -->
-            <!-- <td>Sing</td> -->
-            <!-- <td>NULL</td> -->
-            <!-- <td>0.5</td> -->
-            <!-- <td>5.5</td> -->
-            <!-- </tr> -->
-            <!-- </tbody> -->
+
+            <!--
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Pikachu</td>
+                    <td>Electric</td>
+                    <td>NULL</td>
+                    <td>Spark</td>
+                    <td>Barrier<a href="###">&nbsp;(Remove)</a></td>
+                    <td>0.4</td>
+                    <td>6.0</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Bulbasaur</td>
+                    <td>Grass</td>
+                    <td>Poison</td>
+                    <td>Razor Leaf</td>
+                    <td>Protect <a href="###">&nbsp;(Remove)</a></td>
+                    <td>0.7</td>
+                    <td>6.9</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Jigglypuff</td>
+                    <td>Normal</td>
+                    <td>Fairy</td>
+                    <td>Sing</td>
+                    <td>NULL</td>
+                    <td>0.5</td>
+                    <td>5.5</td>
+                </tr>
+            </tbody>
+        -->
         </table>
     </div>
 
