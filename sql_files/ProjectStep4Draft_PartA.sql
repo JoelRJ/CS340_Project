@@ -3,24 +3,28 @@
 -- Website: http://web.engr.oregonstate.edu/~renteril/CS340_Project/index.html
 
 -- a) Data Definition Queries
+DROP TABLE IF EXISTS attacks;
 CREATE TABLE attacks (
     attackID int(11) NOT NULL AUTO_INCREMENT,
     description varchar(255) NOT NULL,
     PRIMARY KEY (attackID)
     );
     
+DROP TABLE IF EXISTS defenses;
 CREATE TABLE defenses (
     defenseID int(11) NOT NULL AUTO_INCREMENT,
     description varchar(255) NOT NULL,
     PRIMARY KEY (defenseID)
     );   
     
+DROP TABLE IF EXISTS pokemonTypes;
 CREATE TABLE pokemonTypes (
     typeID int(11) NOT NULL AUTO_INCREMENT,
     description varchar(255) NOT NULL,
     PRIMARY KEY (typeID)
     );
     
+DROP TABLE IF EXISTS pokemon;
 CREATE TABLE pokemon (
     pokemonID int(11) NOT NULL AUTO_INCREMENT,
     name varchar(255) NOT NULL,
@@ -37,6 +41,7 @@ CREATE TABLE pokemon (
     CONSTRAINT FOREIGN KEY (defense) REFERENCES defenses(defenseID)  
     );
     
+DROP TABLE IF EXISTS trainers;
 CREATE TABLE trainers (
     trainerID int(11) NOT NULL AUTO_INCREMENT,
     name varchar(255) NOT NULL,
@@ -45,6 +50,7 @@ CREATE TABLE trainers (
     PRIMARY KEY (trainerID)
     );
     
+DROP TABLE IF EXISTS trainers_pokemon;
 CREATE TABLE trainers_pokemon (
     id int(11) NOT NULL AUTO_INCREMENT,
     trainer int(11) NOT NULL,
@@ -55,6 +61,7 @@ CREATE TABLE trainers_pokemon (
     );    
 
     
+DROP TABLE IF EXISTS battles;
 CREATE TABLE battles (
     battleID int(11) NOT NULL AUTO_INCREMENT,
     winner int(11) NOT NULL,
@@ -64,16 +71,8 @@ CREATE TABLE battles (
     CONSTRAINT FOREIGN KEY (loser) REFERENCES trainers (trainerID)  
     );    
 
------------------------------------
-    
+-- ---------------------------------
 -- b) Sample Data
-
-
--- INSERT INTO attacks (description)
--- VALUES ("Overgrow"), ("Torrent"), ("Swarm");
-    
--- INSERT INTO defenses (description)
---    VALUES ("Curl"), ("Rough Skin"), ("Anticipate");
 
 -- pokemonTypes sample data
 INSERT INTO  pokemonTypes
@@ -219,20 +218,20 @@ VALUES
 
 -- battles sample data
 
-INSERT INTO battles
-  (winner, loser) 
-VALUES 
-  ((SELECT trainerID FROM trainers WHERE name = 'Ash Ketchum'), (SELECT trainerID FROM trainers WHERE name = 'Hasty Bogey')),
-  ((SELECT trainerID FROM trainers WHERE name = 'Audre Harberer'), (SELECT trainerID FROM trainers WHERE name = 'Waring Casero')),
-  ((SELECT trainerID FROM trainers WHERE name = 'Izzy Taylor'), (SELECT trainerID FROM trainers WHERE name = 'Dale Spencer')),
-  ((SELECT trainerID FROM trainers WHERE name = 'John Howard'), (SELECT trainerID FROM trainers WHERE name = 'Colt Steele')),
-  ((SELECT trainerID FROM trainers WHERE name = 'Corby Woolforde'), (SELECT trainerID FROM trainers WHERE name = 'Shandra Amdtsen'));
+INSERT INTO battles (winner, loser) 
+    VALUES 
+    ((SELECT trainerID FROM trainers WHERE name = 'Ash Ketchum'), (SELECT trainerID FROM trainers WHERE name = 'Hasty Bogey')),
+    ((SELECT trainerID FROM trainers WHERE name = 'Audre Harberer'), (SELECT trainerID FROM trainers WHERE name = 'Waring Casero')),
+    ((SELECT trainerID FROM trainers WHERE name = 'Izzy Taylor'), (SELECT trainerID FROM trainers WHERE name = 'Dale Spencer')),
+    ((SELECT trainerID FROM trainers WHERE name = 'John Howard'), (SELECT trainerID FROM trainers WHERE name = 'Colt Steele')),
+    ((SELECT trainerID FROM trainers WHERE name = 'Corby Woolforde'), (SELECT trainerID FROM trainers WHERE name = 'Shandra Amdtsen'));
 
 
 -- trainer_pokemons sample data
     
 INSERT INTO trainers_pokemon (trainer, pokemon)
-    VALUES ((SELECT trainerID FROM trainers WHERE name = "Ash Ketchum"), (SELECT pokemonID FROM pokemon WHERE name = "Bulbasaur")),
+    VALUES 
+    ((SELECT trainerID FROM trainers WHERE name = "Ash Ketchum"), (SELECT pokemonID FROM pokemon WHERE name = "Bulbasaur")),
     ((SELECT trainerID FROM trainers WHERE name = "Ash Ketchum"), (SELECT pokemonID FROM pokemon WHERE name = "Pikachu")),
     ((SELECT trainerID FROM trainers WHERE name = "Ash Ketchum"), (SELECT pokemonID FROM pokemon WHERE name = "Charizard")),
     ((SELECT trainerID FROM trainers WHERE name = "Harry Potter"), (SELECT pokemonID FROM pokemon WHERE name = "Bulbasaur")),

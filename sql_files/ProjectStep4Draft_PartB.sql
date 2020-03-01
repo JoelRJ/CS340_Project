@@ -35,6 +35,7 @@ SELECT * FROM attacks;
 INSERT INTO attacks (description)
     VALUES (:attackInput);
 
+DELETE FROM attacks WHERE attackID = :rowID;
 -- ---------------------------
 -- Defenses Table
 SELECT * FROM defenses;
@@ -42,9 +43,9 @@ SELECT * FROM defenses;
 INSERT INTO defenses (description)
     VALUES (:defenseInput);
 
+DELETE FROM defenses WHERE defenseID = :rowID;
 
------------------------------------------
-
+-- ---------------------------------------
 -- POKEMON TABLE
 
 -- View Pokemon Table (SELECT)
@@ -77,8 +78,7 @@ UPDATE pokemon
     SET attack = NULL
     WHERE pokemonID = :rowID;
 
------------------------------------------
-
+-- ---------------------------------------
 -- TRAINER TABLE
 
 -- View Trainer Table (SELECT)
@@ -93,8 +93,7 @@ INSERT INTO  trainers
 -- Remove Trainer (DELETE)
 DELETE FROM trainers WHERE trainerID = :rowID;
 
------------------------------------------
-
+-- ---------------------------------------
 -- BATTLES TABLE
 
 -- View Battle Table (SELECT)
@@ -119,7 +118,7 @@ UPDATE battles
     WHERE battleID = :rowID;
 
 
------------------------------------------
+-- ---------------------------------------
 -- POKEMON TYPES TABLE
 
 -- View Pokemon Types Table (SELECT)
@@ -130,3 +129,6 @@ INSERT INTO  pokemonTypes
   (description) 
 VALUES 
   (:typeInput)
+
+-- Delete Pokemon TYPE
+DELETE FROM pokemon_tpes WHERE id = :rowID;
