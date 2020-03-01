@@ -23,7 +23,6 @@ function CreateTableFromJSON() {
     req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
 
 
-
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
@@ -151,7 +150,7 @@ function insertPokemon() {
     // https://www.w3schools.com/js/js_json_http.asp
     var req = new XMLHttpRequest();
 
-    var payload = {table: null, name: null, type1: null, type2: null, attack: null, defense: null, height: null, weight: null};
+    var payload = { table: null, name: null, type1: null, type2: null, attack: null, defense: null, height: null, weight: null };
     payload.table = getPayload();
     payload.name = document.getElementById("nameID").value;
     payload.type1 = document.getElementById("typeID").value;
@@ -231,6 +230,7 @@ function CreateDropDownList() {
             drop_call("pokemonTypes", "type2ID");
             drop_call("attacks", "attackID");
             drop_call("defenses", "defenseID");
+            //drop_call("pokemonTypes", "selectID");
             drop_call("pokemon", "selectID");
             break;
         case "Trainer Pokemon Inventory":
@@ -287,16 +287,20 @@ function drop_list(data, selectID) {
 function myFunction() {
     var input, filter, table, tr, td, i;
     input = document.getElementById("selectID");
-    filter = input.value;
+    filter = input.value
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tr");
 
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
+        //td = tr[i].getElementsByTagName("td")[2];
         console.log(filter);
         console.log(td);
         if (td) {
-            if (td.innerHTML.indexOf(filter) > -1) {
+            if (filter == 0) {
+                tr[i].style.display = "";
+            }
+            else if (td.innerHTML == filter) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
