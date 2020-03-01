@@ -145,6 +145,40 @@ function insertPokemonTrainer() {
     event.preventDefault();
 }
 
+// Insert into pokemon table
+function insertPokemon() {
+
+    // https://www.w3schools.com/js/js_json_http.asp
+    var req = new XMLHttpRequest();
+
+    var payload = {table: null, name: null, type1: null, type2: null, attack: null, defense: null, height: null, weight: null};
+    payload.table = getPayload();
+    payload.name = document.getElementById("nameID").value;
+    payload.type1 = document.getElementById("typeID").value;
+    payload.type2 = document.getElementById("type2ID").value;
+    payload.attack = document.getElementById("attackID").value;
+    payload.defense = document.getElementById("defenseID").value;
+    payload.height = document.getElementById("heightID").value;
+    payload.weight = document.getElementById("weightID").value;
+    console.log(payload);
+
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_pokemon', true);
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
+            var response = JSON.parse(req.responseText);
+            console.log(response);
+
+            updateTable(response);
+
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+}
+
 
 
 function getPayload() {
