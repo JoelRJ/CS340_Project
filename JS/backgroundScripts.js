@@ -27,6 +27,7 @@ function CreateTableFromJSON() {
         if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
             updateTable(response);
+            console.log(response);
         } else {
             console.log("Error in network request: " + req.statusText);
         }
@@ -269,13 +270,13 @@ function drop_list(data, selectID) {
     var select = document.getElementById(selectID);
 
     for (var i = 0; i < data.length; i++) {
-        console.log(data[i]);
+        // console.log(data[i]);
 
         var keys = Object.keys(data[i]);
         var values = Object.values(data[i])
 
 
-        console.log(values[1]);
+        // console.log(values[1]);
         var el = document.createElement("option");
         el.textContent = values[1];
         el.value = values[0];
@@ -294,8 +295,8 @@ function myFunction() {
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[0];
         //td = tr[i].getElementsByTagName("td")[2];
-        console.log(filter);
-        console.log(td);
+        // console.log(filter);
+        // console.log(td);
         if (td) {
             if (filter == 0) {
                 tr[i].style.display = "";

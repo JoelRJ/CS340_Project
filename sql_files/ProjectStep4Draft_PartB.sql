@@ -49,9 +49,7 @@ DELETE FROM defenses WHERE defenseID = :rowID;
 -- POKEMON TABLE
 
 -- View Pokemon Table (SELECT)
-SELECT pokemon.name, pt1.description AS type1, pt2.description AS type2, attacks.description AS attack, 
-defenses.description AS defense, pokemon.height, pokemon.weight  
-FROM pokemon
+SELECT pokemon.name, pt1.description AS type1, pt2.description AS type2, attacks.description AS attack, defenses.description AS defense, pokemon.height, pokemon.weight FROM pokemon
     JOIN pokemonTypes pt1 ON pt1.typeID = pokemon.type1
     LEFT JOIN pokemonTypes pt2 ON pt2.typeID = pokemon.type2 
     JOIN attacks ON pokemon.attack = attacks.attackID
@@ -70,7 +68,12 @@ VALUES
     :heightInput);
 
 -- Search Pokemon (SELECT)
-SELECT * FROM pokemon WHERE pokemonID = :rowID;
+SELECT pokemonID, name, c1.description, c2.description, attacks.description, \
+        defenses.description, weight, height FROM pokemon \
+            LEFT JOIN pokemonTypes AS c1 ON c1.typeID = pokemon.type1 \
+            LEFT JOIN pokemonTypes AS c2 ON c2.typeID = pokemon.type2 \
+            JOIN attacks ON attacks.attackID = pokemon.attack \
+            JOIN defenses ON defenses.defenseID = pokemon.defense;
 
 
 -- Make 'attack' Attribute NULL (UPDATE)
