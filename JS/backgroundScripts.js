@@ -54,7 +54,8 @@ function updateTable(data) {
         }
 
         var tabCell = tr.insertCell(-1);
-        tabCell.innerHTML = '<button class="btn btn-primary" onclick=removeElement(' + (i + 1) + ')>Delete</button>';
+        tabCell.innerHTML = '<button class="btn btn-primary" onclick=removeElement(' + data[i][0] + ')>Delete</button>';
+        tabCell.parentElement.id = data[i][0];
     }
 }
 
@@ -145,6 +146,36 @@ function insertPokemonTrainer() {
     event.preventDefault();
 }
 
+// Insert into trainer table
+function insertTrainer() {
+
+    // https://www.w3schools.com/js/js_json_http.asp
+    var req = new XMLHttpRequest();
+
+    var payload = { table: null, trainer: null, gender: null, age: null};
+    payload.table = getPayload();
+    payload.trainer = document.getElementById("trainer_name").value;
+    payload.gender = document.getElementById("trainer_gender").value;
+    payload.age = document.getElementById("trainer_age").value;
+    console.log(payload);
+
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer', true);
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
+            var response = JSON.parse(req.responseText);
+            console.log(response);
+
+            updateTable(response);
+
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
+}
+
 // Insert into pokemon table
 function insertPokemon() {
 
@@ -180,7 +211,7 @@ function insertPokemon() {
 }
 
 
-
+// Return the table to query (based on the current page)
 function getPayload() {
 
     var table;
@@ -212,8 +243,31 @@ function getPayload() {
     return table;
 }
 
-function removeElement(id) {
-    document.getElementById("attackTable").deleteRow(id);
+function removeElement(rowID) {
+    
+    // https://www.w3schools.com/js/js_json_http.asp
+    var req = new XMLHttpRequest();
+
+    var payload = {table: null, row: null};
+    payload.table = getPayload();
+    payload.row = rowID;
+    
+    console.log(payload);
+
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/delete_row', true);
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
+            var response = JSON.parse(req.responseText);
+            
+            console.log(response);
+            document.getElementById(rowID).remove();
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
 }
 
 // creates dropdown from SQL server depending on current page browsed
