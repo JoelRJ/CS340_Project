@@ -18,6 +18,8 @@ function CreateTableFromJSON() {
     var req = new XMLHttpRequest();
 
     var payload = getPayload();
+    var updateButton = isUpdateButton();
+    var deleteButton = isDeleteButton();
     console.log(payload);
 
     req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
@@ -26,7 +28,7 @@ function CreateTableFromJSON() {
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
-            updateTable(response);
+            updateTable(response, deleteButton, updateButton);
             console.log(response);
         } else {
             console.log("Error in network request: " + req.statusText);
@@ -39,7 +41,7 @@ function CreateTableFromJSON() {
 
 
 // Update table with contents of response from server
-function updateTable(data) {
+function updateTable(data, deleteButton, updateButton) {
     // Get ID for table on page
     var table = document.getElementById("table");
 
@@ -53,9 +55,15 @@ function updateTable(data) {
             tabCell.innerHTML = data[i][j];
         }
 
-        var tabCell = tr.insertCell(-1);
-        tabCell.innerHTML = '<button class="btn btn-primary" onclick=removeElement(' + data[i][0] + ')>Delete</button>';
-        tabCell.parentElement.id = data[i][0];
+        if (deleteButton == true) {
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = '<button class="btn btn-primary" onclick=removeElement(' + data[i][0] + ')>Delete</button>';
+            tabCell.parentElement.id = data[i][0];
+        }
+        if (updateButton == true) {
+            var tabCell2 = tr.insertCell(-1);
+            tabCell2.innerHTML = '<button class="btn btn-primary")>Update</button>';
+        }
     }
 }
 
@@ -107,7 +115,7 @@ function insertBattle() {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
-            updateTable(response);
+            updateTable(response, false, true);
 
         } else {
             console.log("Error in network request: " + req.statusText);
@@ -136,7 +144,7 @@ function insertPokemonTrainer() {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
-            updateTable(response);
+            updateTable(response, true, true);
 
         } else {
             console.log("Error in network request: " + req.statusText);
@@ -152,7 +160,7 @@ function insertTrainer() {
     // https://www.w3schools.com/js/js_json_http.asp
     var req = new XMLHttpRequest();
 
-    var payload = { table: null, trainer: null, gender: null, age: null};
+    var payload = { table: null, trainer: null, gender: null, age: null };
     payload.table = getPayload();
     payload.trainer = document.getElementById("trainer_name").value;
     payload.gender = document.getElementById("trainer_gender").value;
@@ -166,7 +174,7 @@ function insertTrainer() {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
-            updateTable(response);
+            updateTable(response, true, false);
 
         } else {
             console.log("Error in network request: " + req.statusText);
@@ -244,14 +252,14 @@ function getPayload() {
 }
 
 function removeElement(rowID) {
-    
+
     // https://www.w3schools.com/js/js_json_http.asp
     var req = new XMLHttpRequest();
 
-    var payload = {table: null, row: null};
+    var payload = { table: null, row: null };
     payload.table = getPayload();
     payload.row = rowID;
-    
+
     console.log(payload);
 
     req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/delete_row', true);
@@ -259,7 +267,7 @@ function removeElement(rowID) {
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
-            
+
             console.log(response);
             document.getElementById(rowID).remove();
         } else {
@@ -268,6 +276,39 @@ function removeElement(rowID) {
     });
     req.send(JSON.stringify(payload));
     event.preventDefault();
+}
+
+function isUpdateButton() {
+
+    var updateButton = false
+
+    switch (document.title) {
+        case "Battle Table":
+            updateButton = true;
+            break;
+        case "Trainer Pokemon Inventory":
+            updateButton = true;
+            break;
+    }
+
+    return updateButton;
+}
+
+
+function isDeleteButton() {
+
+    var deleteButton = false
+
+    switch (document.title) {
+        case "Trainer Pokedex":
+            deleteButton = true;
+            break;
+        case "Trainer Pokemon Inventory":
+            deleteButton = true;
+            break;
+    }
+
+    return deleteButton;
 }
 
 // creates dropdown from SQL server depending on current page browsed
