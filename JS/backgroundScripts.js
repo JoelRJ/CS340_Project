@@ -20,15 +20,18 @@ function CreateTableFromJSON() {
     var payload = getPayload();
     var updateButton = isUpdateButton();
     var deleteButton = isDeleteButton();
+    var editOption = isEditOption();
     console.log(payload);
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
+    //req.open("POST", 'http://localhost:8042/view_database', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/view_database', true);
 
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
-            updateTable(response, deleteButton, updateButton);
+            updateTable(response, deleteButton, updateButton, editOption);
             console.log(response);
         } else {
             console.log("Error in network request: " + req.statusText);
@@ -41,7 +44,7 @@ function CreateTableFromJSON() {
 
 
 // Update table with contents of response from server
-function updateTable(data, deleteButton, updateButton) {
+function updateTable(data, deleteButton, updateButton, editOption) {
     // Get ID for table on page
     var table = document.getElementById("table");
 
@@ -49,22 +52,121 @@ function updateTable(data, deleteButton, updateButton) {
     for (var i = 0; i < data.length; i++) {
 
         tr = table.insertRow(-1);
+        tr.setAttribute("id", data[i][0])
 
         for (var j = 0; j < data[0].length; j++) {
             var tabCell = tr.insertCell(-1);
             tabCell.innerHTML = data[i][j];
         }
 
+
+        if (updateButton == true) {
+            var tabCell2 = tr.insertCell(-1);
+            if (editOption == 1) {
+                tabCell2.innerHTML = '<button class="btn btn-primary" onclick="updateRow(' + data[i][0] + ", \'winnerUpdate\', \'loserUpdate\', " + editOption + ')\">Edit</button>';
+            }
+            else {
+                tabCell2.innerHTML = '<button class="btn btn-primary" onclick="updateRow(' + data[i][0] + ", \'trainerUpdate\', \'pokemonUpdate\', " + editOption + ')\">Edit</button>';
+            }
+        }
         if (deleteButton == true) {
             var tabCell = tr.insertCell(-1);
             tabCell.innerHTML = '<button class="btn btn-primary" onclick=removeElement(' + data[i][0] + ')>Delete</button>';
             tabCell.parentElement.id = data[i][0];
         }
-        if (updateButton == true) {
-            var tabCell2 = tr.insertCell(-1);
-            tabCell2.innerHTML = '<button class="btn btn-primary")>Update</button>';
-        }
     }
+}
+
+
+function updateRow(rowID, input1, input2, editOption) {
+
+    var c = document.getElementById(rowID).childNodes;
+
+    inputUpdate1 = input1 + rowID;
+    inputUpdate2 = input2 + rowID;
+    c[1].innerHTML = '<select class="form-control" id="' + inputUpdate1 + '">';
+    c[2].innerHTML = '<select class="form-control" id="' + inputUpdate2 + '">';
+
+    if (editOption == 1) {
+        drop_call("trainers", inputUpdate1);
+        drop_call("trainers", inputUpdate2);
+    }
+    else {
+        drop_call("trainers", inputUpdate1);
+        drop_call("pokemon", inputUpdate2);
+    }
+
+    c[3].innerHTML = '<button class="btn btn-danger" onclick="editRow(' + rowID + ", " + "\'" + inputUpdate1 + "\'" + ', ' + "\'" + inputUpdate2 + "\'" + ', ' + editOption + ')">Update</button>';
+
+}
+
+function editRow(rowID, selectInput1, selectInput2, editOption) {
+
+
+    selInput1 = document.getElementById(selectInput1);
+    selInput2 = document.getElementById(selectInput2);
+
+    selText1 = selInput1.options[selInput1.selectedIndex].text;
+    selText2 = selInput2.options[selInput2.selectedIndex].text;
+
+    selValue1 = selInput1.options[selInput1.selectedIndex].value;
+    selValue2 = selInput2.options[selInput2.selectedIndex].value;
+
+    var c = document.getElementById(rowID).childNodes;
+
+    c[1].innerHTML = selText1;
+    c[2].innerHTML = selText2;
+
+    console.log(selValue1)
+    console.log(selValue2)
+
+    if (editOption == 1) {
+        c[3].innerHTML = '<button class="btn btn-primary" onclick="updateRow(' + rowID + ", \'winnerUpdate\', \'loserUpdate\', " + editOption + ')\">Edit</button>';
+    }
+    else {
+        c[3].innerHTML = '<button class="btn btn-primary" onclick="updateRow(' + rowID + ", \'trainerUpdate\', \'pokemonUpdate\', " + editOption + ')\">Edit</button>';
+    }
+
+    editTable(rowID, selValue1, selValue2);
+}
+
+// request to SQL to update a table (battles or trainer_pokemon)
+function editTable(rowID, editInput1, editInput2) {
+
+    // https://www.w3schools.com/js/js_json_http.asp
+    var req = new XMLHttpRequest();
+
+    var payload = { table: null, rID: null, input1: null, input2: null };
+
+    switch (document.title) {
+        case "Battle Table":
+            payload.table = "battles";
+            break;
+        case "Trainer Pokemon Inventory":
+            payload.table = "trainers_pokemon";
+            break;
+    }
+
+    payload.rID = rowID;
+    payload.input1 = parseInt(editInput1);
+    payload.input2 = parseInt(editInput2);
+    console.log(payload);
+
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/edit_table', true);
+    //req.open("POST", 'http://localhost:8042/edit_table', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/edit_table', true);
+
+    req.addEventListener('load', function () {
+        if (req.status >= 200 && req.status < 400) {
+            var response = JSON.parse(req.responseText);
+            console.log(response);
+            //updateTable(response, true, true, 2);
+        } else {
+            console.log("Error in network request: " + req.statusText);
+        }
+    });
+    req.send(JSON.stringify(payload));
+    event.preventDefault();
 }
 
 
@@ -79,7 +181,9 @@ function insertOne() {
     payload.table = getPayload();
     payload.value = document.getElementById("insert_value").value;
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_one', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_one', true);
+    //req.open("POST", 'http://localhost:8042/insert_one', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_one', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -108,14 +212,16 @@ function insertBattle() {
     payload.loser = document.getElementById("secondInput").value;
     console.log(payload);
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_battle', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_battle', true);
+    //req.open("POST", 'http://localhost:8042/insert_battle', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_battle', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
-            updateTable(response, false, true);
+            updateTable(response, false, true, 1);
 
         } else {
             console.log("Error in network request: " + req.statusText);
@@ -137,14 +243,16 @@ function insertPokemonTrainer() {
     payload.pokemon = document.getElementById("secondInput").value;
     console.log(payload);
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer_pokemon', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer_pokemon', true);
+    //req.open("POST", 'http://localhost:8042/insert_trainer_pokemon', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_trainer_pokemon', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
-            updateTable(response, true, true);
+            updateTable(response, true, true, 2);
 
         } else {
             console.log("Error in network request: " + req.statusText);
@@ -167,7 +275,9 @@ function insertTrainer() {
     payload.age = document.getElementById("trainer_age").value;
     console.log(payload);
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer', true);
+    //req.open("POST", 'http://localhost:8042/insert_trainer', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_trainer', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -201,7 +311,9 @@ function insertPokemon() {
     payload.weight = document.getElementById("weightID").value;
     console.log(payload);
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_pokemon', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_pokemon', true);
+    //req.open("POST", 'http://localhost:8042/insert_pokemon', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_pokemon', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -262,7 +374,9 @@ function removeElement(rowID) {
 
     console.log(payload);
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/delete_row', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/delete_row', true);
+    //req.open("POST", 'http://localhost:8042/delete_row', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/delete_row', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -278,6 +392,7 @@ function removeElement(rowID) {
     event.preventDefault();
 }
 
+// returns which page to allow an update/edit option
 function isUpdateButton() {
 
     var updateButton = false
@@ -294,13 +409,29 @@ function isUpdateButton() {
     return updateButton;
 }
 
+// returns which page an option to edit
+function isEditOption() {
+    var editOption = 0
 
+    switch (document.title) {
+        case "Battle Table":
+            editOption = 1;
+            break;
+        case "Trainer Pokemon Inventory":
+            editOption = 2;
+            break;
+    }
+
+    return editOption;
+}
+
+// returns which page to add a delete button
 function isDeleteButton() {
 
     var deleteButton = false
 
     switch (document.title) {
-        case "Trainer Pokedex":
+        case "Battle Table":
             deleteButton = true;
             break;
         case "Trainer Pokemon Inventory":
@@ -327,7 +458,7 @@ function CreateDropDownList() {
             drop_call("attacks", "attackID");
             drop_call("defenses", "defenseID");
             //drop_call("pokemonTypes", "selectID");
-            drop_call("pokemon", "selectID");
+            drop_call("pokemonTypes", "selectID");
             break;
         case "Trainer Pokemon Inventory":
             drop_call("trainers", "firstInput");
@@ -341,7 +472,9 @@ function CreateDropDownList() {
 function drop_call(database, selectID) {
     var req = new XMLHttpRequest();
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
+    //req.open("POST", 'http://localhost:8042/view_database', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/view_database', true);
 
     var payload = database
 
@@ -383,20 +516,22 @@ function drop_list(data, selectID) {
 function myFunction() {
     var input, filter, table, tr, td, i;
     input = document.getElementById("selectID");
-    filter = input.value
+    //filter = input.value
+    //selInput1.options[selInput1.selectedIndex].value;
+    filter = input.options[input.selectedIndex].text;
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tr");
 
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0];
-        //td = tr[i].getElementsByTagName("td")[2];
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].childNodes;
+        //td = tr[i].getElementsByTagName("td")[0];
         // console.log(filter);
         // console.log(td);
         if (td) {
-            if (filter == 0) {
+            if (filter == 'Show All Types') {
                 tr[i].style.display = "";
             }
-            else if (td.innerHTML == filter) {
+            else if (filter == td[2].innerHTML || filter == td[3].innerHTML) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";

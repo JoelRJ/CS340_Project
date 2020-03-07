@@ -83,6 +83,7 @@
             <div class="form-group text-form">
                 <label for="type_2">Type 2:</label>
                 <select class="form-control" id="type2ID">
+                    <option value="0">None</option>
                 </select>
             </div>
             <div class="form-group text-form">
@@ -111,23 +112,26 @@
     <br>
 
 
-
-
     <!-- Table -->
 
     <div class="container my-5 text-left">
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <h4><b>Pokemon Table of each type:</b></h4>
+                    <h4><b>Pokemon Table: record of each pokemon</b></h4>
                 </div>
                 <div class="col-2">
                 </div>
                 <div class="col">
                     <form class="form-inline" action="#">
+                        <div>
+                            <!--<h4><b>Filter:</b></h4> -->
+                        </div>
                         <div class="text-form">
+
                             <select class="form-control" onchange="myFunction()" id="selectID">
-                                <option value="0">Show All Pokemon</option>
+                                <!-- <select class="form-control" id="selectID"> -->
+                                <option value="0">Show All Types</option>
                                 <!--<option value="0">Show All Types</option>-->
                             </select>
                             <!--
@@ -135,7 +139,7 @@
                                 placeholder="Enter Pokemon's name"> -->
                         </div>
                         <div>
-                            <input class="btn btn-primary" type="submit" value="Search">
+                            <button class="btn btn-primary" onclick="myFunction()">Filter</button>
                         </div>
                     </form>
                 </div>
