@@ -221,7 +221,7 @@ function insertBattle() {
             var response = JSON.parse(req.responseText);
             console.log(response);
 
-            updateTable(response, false, true, 1);
+            updateTable(response, true, true, 1);
 
         } else {
             console.log("Error in network request: " + req.statusText);
