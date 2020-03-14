@@ -25,7 +25,7 @@ function CreateTableFromJSON() {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
     //req.open("POST", 'http://localhost:8042/view_database', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/view_database', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
 
 
     req.addEventListener('load', function () {
@@ -154,7 +154,7 @@ function editTable(rowID, editInput1, editInput2) {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/edit_table', true);
     //req.open("POST", 'http://localhost:8042/edit_table', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/edit_table', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/edit_table', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -179,11 +179,14 @@ function insertOne() {
 
     var payload = { table: null, value: null };
     payload.table = getPayload();
+    
     payload.value = document.getElementById("insert_value").value;
+    if (validateForm(payload.table)) {
+        event.preventDefault();
+        return false;
+    }
 
-    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_one', true);
-    //req.open("POST", 'http://localhost:8042/insert_one', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_one', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_one', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -214,7 +217,7 @@ function insertBattle() {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_battle', true);
     //req.open("POST", 'http://localhost:8042/insert_battle', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_battle', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_battle', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -245,7 +248,7 @@ function insertPokemonTrainer() {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer_pokemon', true);
     //req.open("POST", 'http://localhost:8042/insert_trainer_pokemon', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_trainer_pokemon', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer_pokemon', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -270,14 +273,30 @@ function insertTrainer() {
 
     var payload = { table: null, trainer: null, gender: null, age: null };
     payload.table = getPayload();
+    
     payload.trainer = document.getElementById("trainer_name").value;
+    if (validateForm("trainer_name")) {
+        event.preventDefault();
+        return false;
+    }    
+    
     payload.gender = document.getElementById("trainer_gender").value;
+    if (validateForm("trainer_gender")) {
+        event.preventDefault();
+        return false;
+    }
+        
     payload.age = document.getElementById("trainer_age").value;
+    if (validateForm("trainer_age")) {
+        event.preventDefault();
+        return false;
+    }
+    
     console.log(payload);
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer', true);
     //req.open("POST", 'http://localhost:8042/insert_trainer', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_trainer', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -302,18 +321,33 @@ function insertPokemon() {
 
     var payload = { table: null, name: null, type1: null, type2: null, attack: null, defense: null, height: null, weight: null };
     payload.table = getPayload();
+    
     payload.name = document.getElementById("nameID").value;
+    if (validateForm("nameID")) {
+        event.preventDefault();
+        return false;
+    }
+    
     payload.type1 = document.getElementById("typeID").value;
     payload.type2 = document.getElementById("type2ID").value;
     payload.attack = document.getElementById("attackID").value;
     payload.defense = document.getElementById("defenseID").value;
+    
     payload.height = document.getElementById("heightID").value;
+    if (validateForm("heightID")) {
+        event.preventDefault();
+        return false;
+    }
+    
     payload.weight = document.getElementById("weightID").value;
+    if (validateForm("weightID")) {
+        event.preventDefault();
+        return false;
+    }
+    
     console.log(payload);
 
-    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_pokemon', true);
-    //req.open("POST", 'http://localhost:8042/insert_pokemon', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_pokemon', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_pokemon', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -376,7 +410,7 @@ function removeElement(rowID) {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/delete_row', true);
     //req.open("POST", 'http://localhost:8042/delete_row', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/delete_row', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/delete_row', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -474,7 +508,7 @@ function drop_call(database, selectID) {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
     //req.open("POST", 'http://localhost:8042/view_database', true);
-    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/view_database', true);
+    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
 
     var payload = database
 
@@ -537,5 +571,50 @@ function myFunction() {
                 tr[i].style.display = "none";
             }
         }
+    }
+}
+
+// Validate form for required inputs
+function validateForm(formID) {
+    
+    switch(formID) {
+        case "nameID":
+            item = "Name";
+            break;
+        case "weightID":
+            item = "Weight";
+            break;
+        case "heightID":
+            item = "Height";
+            break;
+        case "trainer_name":
+            item = "Trainer name";
+            break;
+        case "trainer_gender":
+            item = "Trainer gender";
+            break;
+        case "trainer_age":
+            item = "Trainer age";
+            break;        
+        case "attacks":
+            item = "Attack name";
+            formID = "insert_value";
+            break;        
+        case "defenses":
+            item = "Defense name";
+            formID = "insert_value";
+            break;        
+        case "pokemonTypes":
+            item = "Pokemon type";
+            formID = "insert_value";
+            break;
+    }
+    
+    var x = document.getElementById(formID).value;
+
+
+    if (x == "") {
+        alert(item + " must be filled out");
+        return true;
     }
 }
