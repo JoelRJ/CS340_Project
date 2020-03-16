@@ -1,7 +1,7 @@
-// Author: Joel Johnson
-// Date: 6/1/19
-// Purpose: Client-side javascript making AJAX requests from server for Database interactions and UI
-// Site: http://web.engr.oregonstate.edu/~johnsjoe/DBAssignment/
+// Author: Joel Johnson & Luis Renteria
+// Date: 03/15/2020
+// Purpose: Client-side javascript making AJAX requests from server for 340 Project
+// Site: http://web.engr.oregonstate.edu/~renteril/CS340_Project/index.html
 
 document.addEventListener("DOMContentLoaded", initialize);
 
@@ -25,7 +25,7 @@ function CreateTableFromJSON() {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
     //req.open("POST", 'http://localhost:8042/view_database', true);
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/view_database', true);
 
 
     req.addEventListener('load', function () {
@@ -59,7 +59,7 @@ function updateTable(data, deleteButton, updateButton, editOption) {
             tabCell.innerHTML = data[i][j];
         }
 
-
+        // Add update/edit button to relevant pages
         if (updateButton == true) {
             var tabCell2 = tr.insertCell(-1);
             if (editOption == 1) {
@@ -69,6 +69,8 @@ function updateTable(data, deleteButton, updateButton, editOption) {
                 tabCell2.innerHTML = '<button class="btn btn-primary" onclick="updateRow(' + data[i][0] + ", \'trainerUpdate\', \'pokemonUpdate\', " + editOption + ')\">Edit</button>';
             }
         }
+
+        // add delete button to relevant pages 
         if (deleteButton == true) {
             var tabCell = tr.insertCell(-1);
             tabCell.innerHTML = '<button class="btn btn-primary" onclick=removeElement(' + data[i][0] + ')>Delete</button>';
@@ -77,11 +79,13 @@ function updateTable(data, deleteButton, updateButton, editOption) {
     }
 }
 
-
+// A function that executes drop down edit options if edit button is clicked
 function updateRow(rowID, input1, input2, editOption) {
 
+    // get row number
     var c = document.getElementById(rowID).childNodes;
 
+    // create selected drop down option
     inputUpdate1 = input1 + rowID;
     inputUpdate2 = input2 + rowID;
     c[1].innerHTML = '<select class="form-control" id="' + inputUpdate1 + '">';
@@ -96,30 +100,36 @@ function updateRow(rowID, input1, input2, editOption) {
         drop_call("pokemon", inputUpdate2);
     }
 
+    // Change from "edit" mode to "update mode". Clicking on "update" will change the values to the selected option
     c[3].innerHTML = '<button class="btn btn-danger" onclick="editRow(' + rowID + ", " + "\'" + inputUpdate1 + "\'" + ', ' + "\'" + inputUpdate2 + "\'" + ', ' + editOption + ')">Update</button>';
 
 }
 
+// This function will update the row values from the options selected from the drop down options
 function editRow(rowID, selectInput1, selectInput2, editOption) {
 
 
     selInput1 = document.getElementById(selectInput1);
     selInput2 = document.getElementById(selectInput2);
 
+    // grabs text fromt he selected options
     selText1 = selInput1.options[selInput1.selectedIndex].text;
     selText2 = selInput2.options[selInput2.selectedIndex].text;
 
+    // grab values from the selected options
     selValue1 = selInput1.options[selInput1.selectedIndex].value;
     selValue2 = selInput2.options[selInput2.selectedIndex].value;
 
     var c = document.getElementById(rowID).childNodes;
 
+    // update the table from the selected values
     c[1].innerHTML = selText1;
     c[2].innerHTML = selText2;
 
     console.log(selValue1)
     console.log(selValue2)
 
+    // after updating, restore the row's update button to back to it's default mode
     if (editOption == 1) {
         c[3].innerHTML = '<button class="btn btn-primary" onclick="updateRow(' + rowID + ", \'winnerUpdate\', \'loserUpdate\', " + editOption + ')\">Edit</button>';
     }
@@ -154,7 +164,7 @@ function editTable(rowID, editInput1, editInput2) {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/edit_table', true);
     //req.open("POST", 'http://localhost:8042/edit_table', true);
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/edit_table', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/edit_table', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -179,14 +189,16 @@ function insertOne() {
 
     var payload = { table: null, value: null };
     payload.table = getPayload();
-    
+
     payload.value = document.getElementById("insert_value").value;
     if (validateForm(payload.table)) {
         event.preventDefault();
         return false;
     }
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_one', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_one', true);
+    //req.open("POST", 'http://localhost:8042/insert_one', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_one', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -203,6 +215,7 @@ function insertOne() {
     event.preventDefault();
 }
 
+
 // Insert into battles table
 function insertBattle() {
 
@@ -217,7 +230,7 @@ function insertBattle() {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_battle', true);
     //req.open("POST", 'http://localhost:8042/insert_battle', true);
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_battle', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_battle', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -234,6 +247,7 @@ function insertBattle() {
     event.preventDefault();
 }
 
+
 // Insert into trainer_pokemon table
 function insertPokemonTrainer() {
 
@@ -248,7 +262,7 @@ function insertPokemonTrainer() {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer_pokemon', true);
     //req.open("POST", 'http://localhost:8042/insert_trainer_pokemon', true);
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer_pokemon', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_trainer_pokemon', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -273,30 +287,30 @@ function insertTrainer() {
 
     var payload = { table: null, trainer: null, gender: null, age: null };
     payload.table = getPayload();
-    
+
     payload.trainer = document.getElementById("trainer_name").value;
     if (validateForm("trainer_name")) {
         event.preventDefault();
         return false;
-    }    
-    
+    }
+
     payload.gender = document.getElementById("trainer_gender").value;
     if (validateForm("trainer_gender")) {
         event.preventDefault();
         return false;
     }
-        
+
     payload.age = document.getElementById("trainer_age").value;
     if (validateForm("trainer_age")) {
         event.preventDefault();
         return false;
     }
-    
+
     console.log(payload);
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer', true);
     //req.open("POST", 'http://localhost:8042/insert_trainer', true);
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_trainer', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_trainer', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -321,33 +335,35 @@ function insertPokemon() {
 
     var payload = { table: null, name: null, type1: null, type2: null, attack: null, defense: null, height: null, weight: null };
     payload.table = getPayload();
-    
+
     payload.name = document.getElementById("nameID").value;
     if (validateForm("nameID")) {
         event.preventDefault();
         return false;
     }
-    
+
     payload.type1 = document.getElementById("typeID").value;
     payload.type2 = document.getElementById("type2ID").value;
     payload.attack = document.getElementById("attackID").value;
     payload.defense = document.getElementById("defenseID").value;
-    
+
     payload.height = document.getElementById("heightID").value;
     if (validateForm("heightID")) {
         event.preventDefault();
         return false;
     }
-    
+
     payload.weight = document.getElementById("weightID").value;
     if (validateForm("weightID")) {
         event.preventDefault();
         return false;
     }
-    
+
     console.log(payload);
 
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_pokemon', true);
+    //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/insert_pokemon', true);
+    //req.open("POST", 'http://localhost:8042/insert_pokemon', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/insert_pokemon', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -410,7 +426,7 @@ function removeElement(rowID) {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/delete_row', true);
     //req.open("POST", 'http://localhost:8042/delete_row', true);
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/delete_row', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/delete_row', true);
 
     req.addEventListener('load', function () {
         if (req.status >= 200 && req.status < 400) {
@@ -508,7 +524,7 @@ function drop_call(database, selectID) {
 
     //req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
     //req.open("POST", 'http://localhost:8042/view_database', true);
-    req.open("POST", 'http://flip3.engr.oregonstate.edu:16066/view_database', true);
+    req.open("POST", 'http://flip1.engr.oregonstate.edu:9359/view_database', true);
 
     var payload = database
 
@@ -576,8 +592,8 @@ function myFunction() {
 
 // Validate form for required inputs
 function validateForm(formID) {
-    
-    switch(formID) {
+
+    switch (formID) {
         case "nameID":
             item = "Name";
             break;
@@ -595,21 +611,21 @@ function validateForm(formID) {
             break;
         case "trainer_age":
             item = "Trainer age";
-            break;        
+            break;
         case "attacks":
             item = "Attack name";
             formID = "insert_value";
-            break;        
+            break;
         case "defenses":
             item = "Defense name";
             formID = "insert_value";
-            break;        
+            break;
         case "pokemonTypes":
             item = "Pokemon type";
             formID = "insert_value";
             break;
     }
-    
+
     var x = document.getElementById(formID).value;
 
 
